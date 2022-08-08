@@ -26,12 +26,19 @@ trailLocations.push(new place("The Donut Dude", 39.372722206820825, -84.38253986
 trailLocations.push(new place("The Donut Hole by Milton's", 39.35153939298842, -84.46071369730066, "06:00:00", "12:00:00"));
 trailLocations.push(new place("The Donut Spot", 39.339799273536826, -84.5595736819631, "03:00:00", "12:00:00"));
 
-
+/*
 $(document).ready(function() {
 	var date = "2020-02-27";
+
 	optItinerary(date, startLocation, trailLocations);
 });
-
+*/
+function submit() {
+	event.preventDefault();
+	var start = document.getElementById("startLoc").split(" ");
+	startLocation = new place("Start", start[0], start[1], "", "");
+	optItinerary(date, startLocation, trailLocations);
+}
 
 function generateTable(bestRoute) {
 	let headers = ["Name", "Estimated Leg Time", "Estimated Current Time"];
