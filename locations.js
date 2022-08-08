@@ -33,9 +33,22 @@ $(document).ready(function() {
 	optItinerary(date, startLocation, trailLocations);
 });
 */
-function submit() {
+$(document).ready(function() {
+	document.getElementById("form").addEventListener('submit', (event) => {
+		// stop form submission
+		event.preventDefault();
+		var date = "2020-02-27";
+		var start = document.getElementById("startLoc").value.split(" ");
+        	startLocation = new place("Start", start[0], start[1], "", "");
+        	optItinerary(date, startLocation, trailLocations);
+});
+
+});
+
+function submit(event) {
 	event.preventDefault();
-	var start = document.getElementById("startLoc").split(" ");
+	var start = document.getElementById("startLoc")//.split(" ");
+	console.log(start);
 	startLocation = new place("Start", start[0], start[1], "", "");
 	optItinerary(date, startLocation, trailLocations);
 }
