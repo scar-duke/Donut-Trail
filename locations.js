@@ -38,9 +38,27 @@ $(document).ready(function() {
 		// stop form submission
 		event.preventDefault();
 		var date = "2020-02-27";
-		var start = document.getElementById("startLoc").value.split(" ");
-        	startLocation = new place("Start", start[0], start[1], "", "");
-        	optItinerary(date, startLocation, trailLocations);
+		const startLoc = document.getElementById("address").value.split(",");
+		const address1 = startLoc[0];
+		const city = startLoc[1];
+		const state = startLoc[2].substring(0, startLoc[2].indexOf(" "));
+		const zip = startLoc[2].substring(startLoc[2].indexOf(" "));
+		var settings = {
+                url: "https://dev.virtualearth.net/REST/v1/Locations/US/" + state + "/" + zip + "/" + city + "/" + address1 + "?key=AuxGEIC2ARkae9xioljiCYf2h2kGUoUN3RnliY-_pUleCkueIlPiIaAiNzjpgry5",
+                method: "GET",
+                contentType: "application/json",
+        }
+
+        $.ajax(settings)
+          .done(function(res) {
+		  const addressObject = res.resourceSets[0].resources[0];
+		  const coordinates = addressObject.point.coordinates;
+		  startLocation = new place(document.getElementById("address").value, coordinates[0], coordinates[1], "", "");
+		  optItinerary(date, startLocation, trailLocations);
+        }).fail(function(err) {
+                console.log("An error occurred: ");
+                console.log(JSON.stringify(err));
+        });
 });
 
 });
